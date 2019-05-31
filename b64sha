@@ -1,0 +1,143 @@
+#!/usr/bin/perl
+# TODO: https://stackoverflow.com/questions/13800130/adding-a-help-command-to-a-script
+# DESCRIPTION:
+# 
+#   This Perl script calculates and verifies the SHA (256 or 512) hash values
+#   of files and prints them encoded in Base64 instead of hexadecimal. The 
+#   output of this script should be the same as the output of this command:
+# 
+#       openssl dgst -binary -sha256 some_filename | openssl base64
+#   or:
+#       openssl dgst -binary -sha512 some_filename | openssl base64
+# 
+# 
+# Copyright (C) 2019  Miguel Frade
+# 
+# 
+# LICENSE:
+# 
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+# 
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+# 
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+
+use warnings;
+use Getopt::Long;
+use Digest::SHA qw(sha256 sha512);
+
+# get script name
+my $scriptname = $0;
+my $total_args = $#ARGV + 1;
+
+if($total_args <1){
+    print("modo de utilização:\n");
+    print("\t$scriptname ficheiro1 ficheiro2 ...\n");
+    exit(0);
+}
+
+GetOptions(
+  'check=s' => \ my $check,
+  'bits=i'  => \(my $bits = 256),
+  'help'    => sub {HelpMessage($scriptname)}
+) or HelpMessage($scriptname);
+
+
+if($check){ # compares the base64 SHA 256|512 values
+    
+    # validates if it's a text file
+    if(!(-T $check)){
+        die("\'$check\' isn't a text file\n");
+    }
+    
+    open(FICH, $check) || die ("Error opening file: $!\n");
+ 
+    foreach $line (<FICH>){
+        chomp($line);
+        @vector=split("  ",$line);
+        
+        # validate file format
+        if($#vector != 1){
+            die("wrong file format");
+        }
+        
+        $read_digest = $vector[0];
+        $read_digest_len = length($read_digest);
+        
+        if ($read_digest_len == 44){
+            $bits=256;
+        }elsif ($read_digest_len == 88){
+            $bits=512;
+        } else {
+            die("Wrong SHA digest lenght, only 256 and 512 bits are supported");
+        }
+        
+        $read_filename = $vector[1];
+        $calc_digest = b64sha($bits,$read_filename);
+        
+        # compare
+        if($calc_digest eq $read_digest){
+            print("[ OK ]\t$read_filename\n");
+        } else {
+            print("[FAIL]\t$read_filename\n");
+        }
+    
+    }
+    close(FICH);
+
+    
+} else { # calculates and prints the base64 SHA 256|512 values
+    foreach my $filename (@ARGV) {
+        $digest = b64sha($bits,$filename);
+        print("$digest  $filename\n");
+    }
+}
+
+
+####################################################################
+sub b64sha{
+    (@args) = @_;
+
+    $bits = $args[0];
+    $filename = $args[1];
+    
+    $sha = Digest::SHA->new($bits);
+    $sha->addfile($filename);
+    $digest = $sha->b64digest;
+
+    # padding '='
+    while (length($digest) % 4) {
+        $digest .= '=';
+    }
+    
+    return $digest;
+}
+
+####################################################################
+sub HelpMessage{
+    print("Parameters:\n");
+    print("\tfile1 file2 ...     --> Calculates and prints the SHA values, encoded in Base64, of the files\n");
+    print("\t--check|-c filename --> Compares the SHA values stored in filename with the calculated ones\n");
+    print("\t                        and prints [ OK ] or [FAIL]. It is able to automatically detect if it's\n");
+    print("\t                        a 256 or 512 bits version of SHA\n");
+    print("\t--bits|-b 256|512   --> Choose SHA bit lenght, default value is 256\n");
+    print("\t--help|-h           --> Print this help\n");
+    print("\n");
+    print("\tExamples:\n");
+    print("\t\t$scriptname somefile.txt\n");
+    print("\t\t$scriptname -b 512 *.doc\n");
+    print("\t\t$scriptname *.txt > SHA256.txt\n");
+    print("\t\t$scriptname -c SHA256.txt\n");
+    print("\n");
+    exit(0);
+}
+
+
