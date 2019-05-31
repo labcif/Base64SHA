@@ -39,16 +39,14 @@ my $scriptname = $0;
 my $total_args = $#ARGV + 1;
 
 if($total_args <1){
-    print("modo de utilização:\n");
-    print("\t$scriptname ficheiro1 ficheiro2 ...\n");
-    exit(0);
+    HelpMessage();
 }
 
 GetOptions(
   'check=s' => \ my $check,
   'bits=i'  => \(my $bits = 256),
-  'help'    => sub {HelpMessage($scriptname)}
-) or HelpMessage($scriptname);
+  'help'    => sub {HelpMessage()}
+) or HelpMessage();
 
 
 if($check){ # compares the base64 SHA 256|512 values
