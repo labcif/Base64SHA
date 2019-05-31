@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-# TODO: https://stackoverflow.com/questions/13800130/adding-a-help-command-to-a-script
+# 
 # DESCRIPTION:
 # 
 #   This Perl script calculates and verifies the SHA (256 or 512) hash values
