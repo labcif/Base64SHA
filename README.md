@@ -1,6 +1,8 @@
 # b64sha
 
-```b64sha``` is a Perl script to calculate and verify the SHA (256 or 512) hash values of files and prints them encoded in Base64 instead of hexadecimal. The output of this script should be the same as one of these commands:
+```b64sha``` is a Perl script to calculate and verify the SHA (256 or 512) hash values of files and prints them encoded in Base64 instead of hexadecimal. The goal is to have shorter SHA strings to be included on a report, for example.
+
+The output of this script should be the same as one of these commands:
 
 ``` openssl dgst -binary -sha256 some_filename | openssl base64 ```
 
@@ -16,9 +18,9 @@ Digest::SHA
 
 
 ## Parameters
-  
+```b64sha``` can receive the following parameters:
 ```
-file1 file2 ...        --> Calculates and prints the SHA values, encoded in Base64, of the files
+file1 file2 ...        --> Calculates and prints the SHA values of file1 file2 ..., encoded in Base64
 --check|-c filename    --> Compares the SHA values stored in filename with the calculated ones 
                            and prints [ OK ] or [FAIL]. It is able to automatically detect if it's
                            a 256 or 512 bits version of SHA
