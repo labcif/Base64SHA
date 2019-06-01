@@ -51,12 +51,15 @@ $ echo -n "Hello" | b64sha -s
 GF+NsyJx/iX1Yab8k4suJkMG7DBO2lGAB9F2SCY4GWk=  -
 
 $ b64sha *.txt > SHA256
-$ echo "" >> 4.txt
+$ echo " " >> 4.txt
+$ rm 5.txt
 $ b64sha -c SHA256
-[ OK ]  1.txt
-[ OK ]  2.txt
-[ OK ]  3.txt
-[FAIL]  4.txt
+[  OK  ]  1.txt
+[  OK  ]  2.txt
+[  OK  ]  3.txt
+[ FAIL ]  4.txt
+[NOFILE]  5.txt
+
 
 $ b64sha non_existing_file.txt 1.txt
 --------------- No such file ---------------  non_existing_file.txt

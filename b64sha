@@ -89,14 +89,13 @@ if($check){ # compares the base64 SHA 256|512 values
             $calc_digest = b64sha($bits,$read_filename);
             # compare
             if($calc_digest eq $read_digest){
-                print("[ OK ]\t$read_filename\n");
+                print("[  OK  ]  $read_filename\n");
             } else {
-                print("[FAIL]\t$read_filename\n");
+                print("[ FAIL ]  $read_filename\n");
             }
         } else {
-            print("[FAIL]\t$read_filename: $error\n");
+            print("[NOFILE]  $read_filename\n");
         }
-        
         
     
     }
