@@ -48,6 +48,7 @@ GetOptions(
   'help'    => sub {HelpMessage()}
 ) or HelpMessage();
 
+$error = "No such file";
 
 if($check){ # compares the base64 SHA 256|512 values
     
@@ -60,7 +61,9 @@ if($check){ # compares the base64 SHA 256|512 values
  
     foreach $line (<FICH>){
         chomp($line);
-        @vector=split("  ",$line);
+        
+        # limit of split into 2 parts to support filenames with 2 consecutive spaces
+        @vector=split("  ", $line, 2);
         
         # validate file format
         if($#vector != 1){
@@ -68,6 +71,8 @@ if($check){ # compares the base64 SHA 256|512 values
         }
         
         $read_digest = $vector[0];
+        $read_filename = $vector[1];
+        
         $read_digest_len = length($read_digest);
         
         if ($read_digest_len == 44){
@@ -78,15 +83,20 @@ if($check){ # compares the base64 SHA 256|512 values
             die("Wrong SHA digest lenght, only 256 and 512 bits are supported");
         }
         
-        $read_filename = $vector[1];
-        $calc_digest = b64sha($bits,$read_filename);
         
-        # compare
-        if($calc_digest eq $read_digest){
-            print("[ OK ]\t$read_filename\n");
+        if(-e $read_filename){
+            $calc_digest = b64sha($bits,$read_filename);
+            # compare
+            if($calc_digest eq $read_digest){
+                print("[ OK ]\t$read_filename\n");
+            } else {
+                print("[FAIL]\t$read_filename\n");
+            }
         } else {
-            print("[FAIL]\t$read_filename\n");
+            print("[FAIL]\t$read_filename: $error\n");
         }
+        
+        
     
     }
     close(FICH);
@@ -94,8 +104,19 @@ if($check){ # compares the base64 SHA 256|512 values
     
 } else { # calculates and prints the base64 SHA 256|512 values
     foreach my $filename (@ARGV) {
-        $digest = b64sha($bits,$filename);
-        print("$digest  $filename\n");
+        if(-e $filename){
+            $digest = b64sha($bits,$filename);
+            print("$digest  $filename\n");
+        } else {
+            $n = 15;
+            if($bits == 512){
+                $n = 37;
+            }
+            $string = sprintf "-" x $n;
+            
+            print ("$string $error $string  $filename\n");
+
+        }
     }
 }
 
