@@ -103,10 +103,20 @@ if($check){ # compares the base64 SHA 256|512 values
 
     
 } else { # calculates and prints the base64 SHA 256|512 values
-    if ($stdin) {
-            $digest = b64sha_stream($bits);
-            print("$digest  -\n");
-    } else {           
+    
+    if ($stdin) { # from STDIN
+        
+        $sha = Digest::SHA->new($bits);
+        $sha->add(<STDIN>);
+        $digest = $sha->b64digest;
+
+        # padding '='
+        while (length($digest) % 4) {
+            $digest .= '=';
+        }
+        print("$digest  -\n");
+        
+    } else { # from files
             
         foreach my $filename (@ARGV) {
             if(-e $filename){
@@ -125,7 +135,8 @@ if($check){ # compares the base64 SHA 256|512 values
 
             } # else -e
         } # foreach
-    } # else stdin
+        
+    } # from files
 }
 
 
@@ -148,23 +159,6 @@ sub b64sha{
     return $digest;
 }
 
-####################################################################
-sub b64sha_stream{
-    (@args) = @_;
-
-    $bits = $args[0];
-    
-    $sha = Digest::SHA->new($bits);
-    $sha->add(<STDIN>);
-    $digest = $sha->b64digest;
-
-    # padding '='
-    while (length($digest) % 4) {
-        $digest .= '=';
-    }
-    
-    return $digest;
-}
 
 ####################################################################
 sub HelpMessage{
