@@ -45,6 +45,7 @@ if($total_args <1){
 GetOptions(
   'check=s' => \ my $check,
   'bits=i'  => \(my $bits = 256),
+  'stdin'   => \ my $stdin,
   'help'    => sub {HelpMessage()}
 ) or HelpMessage();
 
@@ -65,9 +66,9 @@ if($check){ # compares the base64 SHA 256|512 values
         # limit of split into 2 parts to support filenames with 2 consecutive spaces
         @vector=split("  ", $line, 2);
         
-        # validate file format
+        # if less than 2 parts, file format is invalid
         if($#vector != 1){
-            die("wrong file format");
+            die("Invalid file format");
         }
         
         $read_digest = $vector[0];
@@ -103,21 +104,29 @@ if($check){ # compares the base64 SHA 256|512 values
 
     
 } else { # calculates and prints the base64 SHA 256|512 values
-    foreach my $filename (@ARGV) {
-        if(-e $filename){
-            $digest = b64sha($bits,$filename);
-            print("$digest  $filename\n");
-        } else {
-            $n = 15;
-            if($bits == 512){
-                $n = 37;
-            }
-            $string = sprintf "-" x $n;
+    if ($stdin) {
+            $digest = b64sha_stream($bits);
+            print("$digest  -\n");
+    } else {           
             
-            print ("$string $error $string  $filename\n");
+        foreach my $filename (@ARGV) {
+            if(-e $filename){
+                $digest = b64sha($bits,$filename);
+                print("$digest  $filename\n");
+            } else {
+                # error message has the length of the base64 hash value
+                # so --check can still work
+                $n = 15;
+                if($bits == 512){
+                    $n = 37;
+                }
+                $string = sprintf "-" x $n;
+                
+                print ("$string $error $string  $filename\n");
 
-        }
-    }
+            } # else -e
+        } # foreach
+    } # else stdin
 }
 
 
@@ -141,20 +150,40 @@ sub b64sha{
 }
 
 ####################################################################
+sub b64sha_stream{
+    (@args) = @_;
+
+    $bits = $args[0];
+    
+    $sha = Digest::SHA->new($bits);
+    $sha->add(<STDIN>);
+    $digest = $sha->b64digest;
+
+    # padding '='
+    while (length($digest) % 4) {
+        $digest .= '=';
+    }
+    
+    return $digest;
+}
+
+####################################################################
 sub HelpMessage{
-    print("Parameters:\n");
+    print("$scriptname parameters:\n");
     print("\tfile1 file2 ...     --> Calculates and prints the SHA values, encoded in Base64, of the files\n");
     print("\t--check|-c filename --> Compares the SHA values stored in filename with the calculated ones\n");
     print("\t                        and prints [ OK ] or [FAIL]. It is able to automatically detect if it's\n");
     print("\t                        a 256 or 512 bits version of SHA\n");
     print("\t--bits|-b 256|512   --> Choose SHA bit lenght, default value is 256\n");
+    print("\t--stdin|-s          --> read data from STDIN\n");
     print("\t--help|-h           --> Print this help\n");
     print("\n");
-    print("\tExamples:\n");
+    print("\tUsage examples:\n");
     print("\t\t$scriptname somefile.txt\n");
     print("\t\t$scriptname -b 512 *.doc\n");
     print("\t\t$scriptname *.txt > SHA256.txt\n");
     print("\t\t$scriptname -c SHA256.txt\n");
+    print("\t\techo -n \"Hello\" | $scriptname -s\n");
     print("\n");
     exit(0);
 }
