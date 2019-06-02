@@ -1,6 +1,6 @@
 # b64sha
 
-```b64sha``` is a Perl script to calculate, and compare, the SHA hash values (256 or 512 bits) and prints them encoded in Base64 instead of hexadecimal. The goal is to have about 31% shorter SHA strings:
+```b64sha``` is a Perl script to calculate, and compare, the SHA hash values (256 or 512 bits) and print them encoded in base64 instead of hexadecimal. The goal is to have about 31% shorter SHA strings:
 
 ``` 
 # hexadecimal value of SHA256 (SHA512), 64 (128) chars long
