@@ -51,6 +51,10 @@ GetOptions(
 
 $error = "No such file";
 
+if( ($bits != 256) and ($bits != 512) ){
+    die("$bits bits is not supported!");
+}
+
 if($check){ # compares the base64 SHA 256|512 values
     
     # validates if it's a text file

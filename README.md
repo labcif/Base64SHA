@@ -40,7 +40,7 @@ Installation is not requeired, but on Linux you can download the script and do:
 ```
 $ sudo ./install.sh
 ```
-The default install dir is ```/usr/local/bin"```. If you want a different location edit the script and change the value of ``` INSTALL_DIR```
+The default install dir is ```/usr/local/bin```. If you want a different location edit the script and change the value of ``` INSTALL_DIR```
 
 
 ## Examples
