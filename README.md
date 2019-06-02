@@ -1,14 +1,20 @@
 # b64sha
 
-```b64sha``` is a Perl script to calculate and verify the SHA (256 or 512) hash values of files and prints them encoded in Base64 instead of hexadecimal. The goal is to have shorter SHA strings to be included on a report, for example.
+```b64sha``` is a Perl script to calculate, and compare, the SHA (256 or 512) hash values of files and prints them encoded in Base64 instead of hexadecimal. The goal is to have shorter SHA strings (about 31% less) to be included on a report: 
 
-The output of this script should be the same as one of these commands:
+``` 
+# hexadecimal value of SHA256, 64 chars long
+66a045b452102c59d840ec097d59d9467e13a3f34f6494e539ffd32c1bb35f18
 
-``` openssl dgst -binary -sha256 some_filename | openssl base64 ```
+# base64 value of SHA256, 44 chars long
+ZqBFtFIQLFnYQOwJfVnZRn4To/NPZJTlOf/TLBuzXxg=
+``` 
 
- or:
- 
-``` openssl dgst -binary -sha512 some_filename | openssl base64 ```
+You may compare the output of this script with these commands (replace **-sha256** with **-sha512** for the 512 bits version):
+
+``` 
+openssl dgst -binary -sha256 some_filename | openssl base64
+``` 
 
 This script was developed and tested under Ubuntu 18.04, but should work on other \*nixes and also Windows as log as the following Perl packages are present: 
 ```
@@ -32,9 +38,10 @@ file1 file2 ...        --> Calculates and prints the SHA values of file1 file2 .
 ## Installation
 Installation is not requeired, but on Linux you can download the script and do:
 ```
-$ chmod +x ./b64sha
-$ sudo mv ./b64sha /usr/local/bin
+$ sudo ./install.sh
 ```
+The default install dir is ```/usr/local/bin"```. If you want a different location edit the script and change the value of ``` INSTALL_DIR```
+
 
 ## Examples
 The following examples assume that **b64sha** is located on a directory included on the **$PATH**. If that's not the case, just replace ```b64sha``` by ```./b64sha```:

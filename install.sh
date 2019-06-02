@@ -5,7 +5,9 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-cp b64sha /usr/local/bin
-chmod +x /usr/local/bin/b64sha
+INSTALL_DIR="/usr/local/bin"
+
+cp b64sha $INSTALL_DIR
+chmod +x $INSTALL_DIR/b64sha
 
 echo "Done"
