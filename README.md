@@ -3,11 +3,13 @@
 ```b64sha``` is a Perl script to calculate, and compare, the SHA (256 or 512) hash values of files and prints them encoded in Base64 instead of hexadecimal. The goal is to have shorter SHA strings (about 31% less) to be included on a report: 
 
 ``` 
-# hexadecimal value of SHA256, 64 chars long
+# hexadecimal value of SHA256 (SHA512), 64 (128) chars long
 66a045b452102c59d840ec097d59d9467e13a3f34f6494e539ffd32c1bb35f18
+c2bad2223811194582af4d1508ac02cd69eeeeedeeb98d54fcae4dcefb13cc882e7640328206603d3fb9cd5f949a9be0db054dd34fbfa190c498a5fe09750cef
 
-# base64 value of SHA256, 44 chars long
+# base64 value of SHA256 (SHA512), 44 (88) chars long
 ZqBFtFIQLFnYQOwJfVnZRn4To/NPZJTlOf/TLBuzXxg=
+wrrSIjgRGUWCr00VCKwCzWnu7u3uuY1U/K5NzvsTzIgudkAyggZgPT+5zV+Umpvg2wVN00+/oZDEmKX+CXUM7w==
 ``` 
 
 You may compare the output of this script with these commands (replace **-sha256** with **-sha512** for the 512 bits version):
