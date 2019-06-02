@@ -1,6 +1,6 @@
 # b64sha
 
-```b64sha``` is a Perl script to calculate, and compare, the SHA hash values (256 or 512 bits) and print them encoded in base64 instead of hexadecimal. The goal is to have about 31% shorter SHA strings:
+```b64sha``` is a Perl script to calculate, and compare, the SHA hash values (256 or 512 bits) and print them encoded in base64 instead of hexadecimal. The goal is to have 31% shorter SHA strings:
 
 ``` 
 # hexadecimal value of SHA256 (SHA512), 64 (128) chars long
@@ -40,7 +40,7 @@ The default install dir is ```/usr/local/bin```. If you want a different locatio
 
 
 ### Requirements
-This script was developed and tested under Ubuntu 18.04, but should work on other \*nixes and also Windows as log as the following Perl packages are present: 
+This script was developed and tested under Ubuntu 18.04, but should work on other \*nixes and also Windows as long as the following Perl packages are present: 
 ```
 Getopt::Long
 Digest::SHA
