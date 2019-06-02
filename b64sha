@@ -3,13 +3,9 @@
 # DESCRIPTION:
 # 
 #   This Perl script calculates and verifies the SHA (256 or 512) hash values
-#   of files and prints them encoded in Base64 instead of hexadecimal. The 
-#   output of this script should be the same as the output of this command:
-# 
-#       openssl dgst -binary -sha256 some_filename | openssl base64
-#   or:
-#       openssl dgst -binary -sha512 some_filename | openssl base64
-# 
+#   of files and prints them encoded in Base64 instead of hexadecimal. The goal
+#   is to have shorter SHA strings (about 31% less), for example, to be included
+#   on a report.
 # 
 # Copyright (C) 2019  Miguel Frade
 # 
