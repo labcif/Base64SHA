@@ -1,6 +1,6 @@
 # b64sha
 
-```b64sha``` is a Perl script to calculate, and compare, the SHA (256 or 512) hash values of files and prints them encoded in Base64 instead of hexadecimal. The goal is to have shorter SHA strings (about 31% less):
+```b64sha``` is a Perl script to calculate, and compare, the SHA (256 or 512 bits) hash values of files and prints them encoded in Base64 instead of hexadecimal. The goal is to have shorter SHA strings (about 31% less):
 
 ``` 
 # hexadecimal value of SHA256 (SHA512), 64 (128) chars long
@@ -17,12 +17,6 @@ You may compare the output of this script with these commands (replace **-sha256
 ``` 
 openssl dgst -binary -sha256 some_filename | openssl base64
 ``` 
-
-This script was developed and tested under Ubuntu 18.04, but should work on other \*nixes and also Windows as log as the following Perl packages are present: 
-```
-Getopt::Long
-Digest::SHA
-```
 
 
 ## Parameters
@@ -44,6 +38,13 @@ $ sudo ./install.sh
 ```
 The default install dir is ```/usr/local/bin```. If you want a different location edit the script and change the value of ``` INSTALL_DIR```
 
+
+### Requirements
+This script was developed and tested under Ubuntu 18.04, but should work on other \*nixes and also Windows as log as the following Perl packages are present: 
+```
+Getopt::Long
+Digest::SHA
+```
 
 ## Examples
 The following examples assume that **b64sha** is located on a directory included on the **$PATH**. If that's not the case, just replace ```b64sha``` by ```./b64sha```:
