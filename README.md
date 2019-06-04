@@ -75,3 +75,9 @@ $ b64sha non_existing_file.txt 1.txt
 --------------- No such file ---------------  non_existing_file.txt
 2iQX4HpSg7jV0mkFKC4Puihxtt+8hlZRYvaj/V29PNg=  1.txt
 ```
+
+# Share
+
+Cite as:
+
+Miguel Frade. (2019, June 3). labcif/Base64SHA: Base64SHA-1.2 (Version v1.2). Zenodo. http://doi.org/10.5281/zenodo.3237862 ([BibTeX file](BibTeX.bib))
