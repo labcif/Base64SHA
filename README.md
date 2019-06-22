@@ -41,7 +41,7 @@ The default install dir is ```/usr/local/bin```. If you want a different locatio
 
 
 ### Requirements
-This script was developed and tested under Ubuntu 18.04, but should work on other \*nixes and also Windows as long as the following Perl packages are present: 
+This script was developed and tested under Ubuntu 18.04, but should work on other \*nixes as long as the following Perl packages are present: 
 ```
 Getopt::Long
 Digest::SHA
