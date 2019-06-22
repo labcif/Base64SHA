@@ -72,7 +72,6 @@ $ b64sha -c SHA256
 [NOFILE]  ./d2/5.txt
 [  OK  ]  ./d2/6.txt
 
-
 $ b64sha non_existing_file.txt 1.txt
 non_existing_file.txt: No such file
 2iQX4HpSg7jV0mkFKC4Puihxtt+8hlZRYvaj/V29PNg=  1.txt
