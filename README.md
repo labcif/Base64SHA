@@ -1,6 +1,6 @@
 # b64sha
 
-```b64sha``` is a Perl script to calculate, and compare, the SHA hash values (256 or 512 bits) and print them encoded in base64 instead of hexadecimal. The goal is to have 31% shorter SHA strings:
+`b64sha` is a Perl script to calculate, and compare, the SHA hash values (256 or 512 bits) and print them encoded in base64 instead of hexadecimal. The goal is to have 31% shorter SHA strings:
 
 ``` 
 # hexadecimal value of SHA256 (SHA512), 64 (128) chars long
@@ -20,13 +20,14 @@ openssl dgst -binary -sha256 some_filename | openssl base64
 
 
 ## Parameters
-```b64sha``` can receive the following parameters:
+`b64sha` can receive the following parameters:
 ```
 file1 file2 ...        --> Calculates and prints the SHA values of file1 file2 ..., encoded in Base64
 --check|-c filename    --> Compares the SHA values stored in filename with the calculated ones 
                            and prints [ OK ] or [FAIL]. It is able to automatically detect if it's
                            a 256 or 512 bits version of SHA
 --bits|-b 256|512      --> Choose SHA bit lenght, default value is 256
+--recursive|-r         --> Recursively traverse directories
 --stdin|-s             --> Read data from STDIN
 --help|-h              --> Print help message
 ```
@@ -60,19 +61,20 @@ pcw2NuOOATAyMMhAb+urDI0iWbbRGgVA+PNgqXG30qaGAAyZmmF2ujw9Gb1RaGxpA+kcgumKEkc+ZSbp
 $ echo -n "Hello" | b64sha -s
 GF+NsyJx/iX1Yab8k4suJkMG7DBO2lGAB9F2SCY4GWk=  -
 
-$ b64sha *.txt > SHA256
-$ echo " " >> 4.txt
-$ rm 5.txt
+$ b64sha -r . > SHA256
+$ echo " " >> 2.txt
+$ rm d2/5.txt
 $ b64sha -c SHA256
-[  OK  ]  1.txt
-[  OK  ]  2.txt
-[  OK  ]  3.txt
-[ FAIL ]  4.txt
-[NOFILE]  5.txt
+[  OK  ]  ./1.txt
+[ FAIL ]  ./2.txt
+[  OK  ]  ./d1/3.txt
+[  OK  ]  ./d1/4.txt
+[NOFILE]  ./d2/5.txt
+[  OK  ]  ./d2/6.txt
 
 
 $ b64sha non_existing_file.txt 1.txt
---------------- No such file ---------------  non_existing_file.txt
+non_existing_file.txt: No such file
 2iQX4HpSg7jV0mkFKC4Puihxtt+8hlZRYvaj/V29PNg=  1.txt
 ```
 
