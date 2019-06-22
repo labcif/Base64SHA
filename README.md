@@ -29,7 +29,7 @@ file1 file2 ...        --> Calculates and prints the SHA values of file1 file2 .
 --bits|-b 256|512      --> Choose SHA bit lenght, default value is 256
 --recursive|-r         --> Recursively traverse directories
 --stdin|-s             --> Read data from STDIN
---version|-v            --> Print script version
+--version|-v           --> Print script version
 --help|-h              --> Print help message
 ```
 
