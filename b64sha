@@ -30,6 +30,9 @@ use warnings;
 use Getopt::Long;
 use Digest::SHA qw(sha256 sha512);
 
+# this script version
+my $version = "1.3"; # 2019-06-22
+
 # get script name
 my $scriptname = $0;
 my $total_args = $#ARGV + 1;
@@ -43,6 +46,7 @@ GetOptions(
   'bits=i'    => \(my $bits = 256),
   'stdin'     => \ my $stdin,
   'recursive' => \ my $recursive,
+  'version'   => sub {Version()},
   'help'      => sub {HelpMessage()}
 ) or HelpMessage();
 
@@ -243,6 +247,7 @@ sub HelpMessage{
     print("\t--bits|-b 256|512   --> Choose SHA bit lenght, default value is 256\n");
     print("\t--recursive|-r      --> recursively traverse directories\n");
     print("\t--stdin|-s          --> read data from STDIN\n");
+    print("\t--versin|-v         --> Print script version\n");
     print("\t--help|-h           --> Print this help\n");
     print("\n");
     print("\tUsage examples:\n");
@@ -256,4 +261,10 @@ sub HelpMessage{
     exit(0);
 }
 
-
+####################################################################
+sub Version{
+    print("Base64SHA script version $version\n");
+    print("\tCopyright (C) 2019  Miguel Frade\n");
+    print("\n");
+    exit(0);
+}

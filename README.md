@@ -29,6 +29,7 @@ file1 file2 ...        --> Calculates and prints the SHA values of file1 file2 .
 --bits|-b 256|512      --> Choose SHA bit lenght, default value is 256
 --recursive|-r         --> Recursively traverse directories
 --stdin|-s             --> Read data from STDIN
+--versin|-v            --> Print script version
 --help|-h              --> Print help message
 ```
 
@@ -75,6 +76,10 @@ $ b64sha -c SHA256
 $ b64sha non_existing_file.txt 1.txt
 non_existing_file.txt: No such file
 2iQX4HpSg7jV0mkFKC4Puihxtt+8hlZRYvaj/V29PNg=  1.txt
+
+$ b64sha -v
+Base64SHA script version 1.3
+    Copyright (C) 2019  Miguel Frade
 ```
 
 # Share
