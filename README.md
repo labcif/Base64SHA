@@ -87,4 +87,4 @@ Base64SHA script:
 
 Cite as:
 
-Miguel Frade. (2019, June 3). labcif/Base64SHA: Base64SHA-1.2 (Version v1.2). Zenodo. http://doi.org/10.5281/zenodo.3237862 ([BibTeX file](BibTeX.bib))
+Miguel Frade. (2019, June 22). labcif/Base64SHA: Base64SHA Perl script to calculate the SHA hash values encoded in base64. Zenodo. http://doi.org/10.5281/zenodo.3237862 ([BibTeX file](BibTeX.bib))
