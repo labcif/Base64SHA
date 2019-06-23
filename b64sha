@@ -265,7 +265,8 @@ sub HelpMessage{
 ####################################################################
 sub Version{
     print("Base64SHA script:\n");
-    print("\tVersion $version, updated on $last_update\n");
+    print("\tVersion $version ($last_update)\n");
+    print("\tGNU General Public License v3.0\n");
     print("\tCopyright (C) 2019  Miguel Frade\n");
     print("\n");
     exit(0);

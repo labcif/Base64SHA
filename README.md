@@ -79,7 +79,8 @@ non_existing_file.txt: No such file
 
 $ b64sha -v
 Base64SHA script:
-        Version 1.3, updated on 2019-06-22
+        Version 1.3 (2019-06-22)
+        GNU General Public License v3.0
         Copyright (C) 2019  Miguel Frade
 ```
 
