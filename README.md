@@ -66,15 +66,15 @@ $ b64sha -r . > SHA256
 $ echo " " >> 2.txt
 $ rm d2/5.txt
 $ b64sha -c SHA256
-[  OK  ]  ./1.txt
-[ FAIL ]  ./2.txt
-[  OK  ]  ./d1/3.txt
-[  OK  ]  ./d1/4.txt
-[NOFILE]  ./d2/5.txt
-[  OK  ]  ./d2/6.txt
+[ OK ]  ./1.txt
+[FAIL]  ./2.txt
+[ OK ]  ./d1/3.txt
+[ OK ]  ./d1/4.txt
+[WARN]  ./d2/5.txt: No such file
+[ OK ]  ./d2/6.txt
 
 $ b64sha non_existing_file.txt 1.txt
-non_existing_file.txt: No such file
+[WARN]  non_existing_file.txt: No such file
 2iQX4HpSg7jV0mkFKC4Puihxtt+8hlZRYvaj/V29PNg=  1.txt
 
 $ b64sha -v

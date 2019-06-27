@@ -256,7 +256,7 @@ sub print_error {
     my ($msg) = shift;
     
     if(! $quiet){
-        print STDERR colored("[ERROR]", 'red');
+        print STDERR colored("[WARN]", 'yellow');
         print STDERR "  $msg";
     }
        
@@ -268,8 +268,8 @@ sub print_error {
 sub print_ok {
     my ($msg) = shift;
     
-    print colored("[ OK  ]  ", 'green');
-    print "$msg";
+    print colored("[ OK ]", 'green');
+    print "  $msg";
 }
 
 ####################################################################
@@ -277,8 +277,8 @@ sub print_ok {
 sub print_fail {
     my ($msg) = shift;
     
-    print colored("[FAIL ]  ", 'yellow');
-    print "$msg";
+    print colored("[FAIL]", 'red');
+    print "  $msg";
 }
 
 ####################################################################
